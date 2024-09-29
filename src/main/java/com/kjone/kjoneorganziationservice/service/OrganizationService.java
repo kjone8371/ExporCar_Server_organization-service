@@ -2,6 +2,7 @@ package com.kjone.kjoneorganziationservice.service;
 
 
 
+import com.kjone.kjoneorganziationservice.domain.organization.Organization;
 import com.kjone.kjoneorganziationservice.domain.organization_user.LoginRequest;
 import com.kjone.kjoneorganziationservice.domain.organization_user.Organization_User;
 import com.kjone.kjoneorganziationservice.domain.request.SignRequest;
@@ -21,5 +22,7 @@ public interface OrganizationService {
     Organization_User updateProfile(Long id, SignRequest signRequest) throws Exception;
 
       // organization 생성/ 관리
+
+    public void createOrganization(Organization organization, String sender) throws Exception;
 
 }
