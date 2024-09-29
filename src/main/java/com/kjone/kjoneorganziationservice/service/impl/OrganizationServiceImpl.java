@@ -172,16 +172,35 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .name(organization.getName()) // 조직 이름 설정
                 .owner_id(user) // 조직자 설정
                 .build();
-
         organizationRepository.save(newOrganization);
 
         // 조직 생성 성공 메시지 로그 또는 처리
         System.out.println("조직이 성공적으로 생성되었습니다.");
-
-
-
     }
 
+    //조직 이름으로 조직 조회하기
+    @Override
+    public Organization getOrganizationName(String name, String sender) throws Exception {
+        //조직 사용자 확인
+        Organization_User organizationUser = organizationUserRepository.findByEmail(sender)
+                .orElseThrow(() -> new RuntimeException("조직자를 찾을 수 없습니다."));
+
+        //사용자 권한 확인
+        if(!organizationUser.isOwner()) {
+            throw new GlobalException(HttpStatus.FORBIDDEN, "조직자의 권한이 없습니다.");
+        }
+
+
+        return (Organization) organizationRepository.findByName(name).stream()
+                .map(organization -> new Organization(
+                        organization.getId(),
+                        organization.getName(),
+                        organization.getOwner_id(),
+                        organization.getCreateTime(),
+                        organization.getUpdateTime()
+                ))
+                .collect(Collectors.toList());
+    }
 
 
 
