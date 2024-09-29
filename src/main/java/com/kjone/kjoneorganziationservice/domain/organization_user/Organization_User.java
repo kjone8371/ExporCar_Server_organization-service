@@ -4,10 +4,7 @@ package com.kjone.kjoneorganziationservice.domain.organization_user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kjone.kjoneorganziationservice.domain.role.Authority;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,7 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "organization_user")
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -59,5 +57,8 @@ public class Organization_User {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.roles = roles;
+    }
+    public boolean isOwner() {
+        return roles.contains(Authority.OWNER);
     }
 }
