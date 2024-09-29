@@ -1,6 +1,7 @@
 package com.kjone.kjoneorganziationservice.domain.organization;
 
 
+import com.kjone.kjoneorganziationservice.domain.organization_user.Organization_User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,9 +25,10 @@ public class Organization {
     private String name;
 
 
-    @Column(name = "owner_id")
-    @JoinColumn(name = "owner_id")
-    private Long ownerId;
+    // 조직자와의 1:1 관계 설정
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", unique = true, nullable = false)
+    private Organization_User owner_id;
 
     //가입날짜
     @CreationTimestamp
