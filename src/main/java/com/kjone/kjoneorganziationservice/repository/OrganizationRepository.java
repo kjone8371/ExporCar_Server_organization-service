@@ -9,5 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization,Long> {
+    //조직자 이메일로 검색 하기
     Optional<Organization> findByEmail(String email);
+    //조직 이름으로 검색 하기
+    Optional<Organization> findByName(String name);
 }
