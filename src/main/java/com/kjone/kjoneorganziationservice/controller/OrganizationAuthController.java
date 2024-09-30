@@ -24,7 +24,7 @@ import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/organization")
+@RequestMapping("/v1/organization/sign")
 public class OrganizationAuthController {
     private final OrganizationService organizationService;
     private final JwtProvider jwtProvider;
