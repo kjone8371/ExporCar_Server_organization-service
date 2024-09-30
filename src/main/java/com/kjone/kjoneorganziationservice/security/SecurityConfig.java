@@ -94,12 +94,13 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST, "/v1/organization/signup", "/v1/organization/signin").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/organization/sign/signup", "/v1/organization/sign/signin").permitAll()
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/user/me").hasAnyRole("USER", "ADMIN", "OWNER", "EMPLOYEE")
-                        .requestMatchers(HttpMethod.GET, "/v1/organization/signout").authenticated() // 인증된 유저만
-                        .requestMatchers(HttpMethod.DELETE, "/v1/organization/delete").authenticated() // 인증된 유저만
+                        .requestMatchers(HttpMethod.GET, "/v1/user/me").authenticated() // 인증된 유저만
+                        .requestMatchers("/v1/organization/**").authenticated() // 인증된 유저만
+                        .requestMatchers(HttpMethod.GET, "/v1/organization/sign/signout").authenticated() // 인증된 유저만
+                        .requestMatchers(HttpMethod.DELETE, "/v1/organization/sign/delete").authenticated() // 인증된 유저만
                         .requestMatchers("/favicon.ico").permitAll() // Favicon에 대한 접근 허용
                         .anyRequest().denyAll());
 
