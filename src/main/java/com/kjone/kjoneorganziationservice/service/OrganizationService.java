@@ -21,10 +21,4 @@ public interface OrganizationService {
     Organization_User createProfile(Long id, SignRequest signRequest) throws Exception;
     Organization_User updateProfile(Long id, SignRequest signRequest) throws Exception;
 
-      // organization 생성/ 관리
-
-    public void createOrganization(Organization organization, String sender) throws Exception;
-    public Organization getOrganizationName(String name, String sender) throws Exception;
-
-
 }
