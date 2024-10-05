@@ -61,4 +61,9 @@ public class Organization_User {
     public boolean isOwner() {
         return roles.contains(Authority.OWNER);
     }
+
+    public Organization_User(String id) {
+        this.id = Long.valueOf(id);
+    }
 }
+
