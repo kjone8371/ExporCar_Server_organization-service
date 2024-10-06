@@ -4,10 +4,12 @@ package com.kjone.kjoneorganziationservice.controller;
 import com.kjone.kjoneorganziationservice.domain.organization.Organization;
 import com.kjone.kjoneorganziationservice.repository.OrganizationRepository;
 import com.kjone.kjoneorganziationservice.service.OrganizationsService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,6 @@ public class OrganizationController {
     private final OrganizationsService organizationService;
     private final OrganizationRepository organizationRepository;
 
-    // 조직 생성 엔드포인트
 //    @PostMapping("/create")
 //    public ResponseEntity<String> createOrganization(
 //            @RequestBody Organization organization,
@@ -35,15 +36,18 @@ public class OrganizationController {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 //        }
 //    }
+
     // 조직 생성 엔드포인트
     @PostMapping("/create")
-    public ResponseEntity<String> createOrganization(@RequestBody Organization organization, @RequestParam String sender) {
-        try {
+    public ResponseEntity<?> createOrganization(@RequestBody Organization organization, HttpServletRequest request, @RequestParam String sender) throws Exception {
+        // 인증된 사용자만 로그아웃을 허용
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            System.out.println("Create User: " + SecurityContextHolder.getContext().getAuthentication().getName());
+
             organizationService.createOrganization(organization, sender);
-            return ResponseEntity.status(HttpStatus.CREATED).body("조직이 성공적으로 생성되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN); // 인증되지 않은 사용자 접근 시 403 반환
     }
 
 
