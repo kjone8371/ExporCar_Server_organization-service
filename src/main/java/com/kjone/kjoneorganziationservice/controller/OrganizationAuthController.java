@@ -30,7 +30,7 @@ public class OrganizationAuthController {
     private final JwtProvider jwtProvider;
     private final CookieProvider cookieProvider;
 
-    //로그인 메서드
+    //로그인 메서드 포스트 메핑
     @PostMapping("/signin")
     public ResponseEntity<?> Organization_signIn(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         try {
