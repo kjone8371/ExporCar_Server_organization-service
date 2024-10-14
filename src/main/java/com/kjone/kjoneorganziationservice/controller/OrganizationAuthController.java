@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+//auth 컨트롤러
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/organization/sign")
